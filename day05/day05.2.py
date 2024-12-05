@@ -11,18 +11,28 @@ def p_order(updates, orders):
         print()
         for o in orders:
             print("order", o)
-            print(possible_indexes[o[0]])
-            ix_low = max(possible_indexes[o[0]])
-            possible_indexes[o[1]] =[ ix for ix in possible_indexes[o[1]] if ix > ix_low]
-            print(possible_indexes[o[1]])
-            ix_high = min(possible_indexes[o[1]])
-            possible_indexes[o[0]] = [ix for ix in possible_indexes[o[0]] if ix < ix_high]
+            print("possible", o[0], possible_indexes[o[0]])
+            print("possible", o[1], possible_indexes[o[1]])
+
+            ix_low = min(possible_indexes[o[0]])
+            print("low", ix_low)
+            ix_high = max(possible_indexes[o[1]])
+            print("high", ix_high)
+            print("---")
+
+            possible_indexes[o[1]] = [i for i in possible_indexes[o[1]] if i > ix_low]
+            possible_indexes[o[0]] = [i for i in possible_indexes[o[0]] if i < ix_high]
+
+            for k, v in possible_indexes.items():
+                print(k, v)
+            print()
+
         max_len = max(len(pi) for pi in possible_indexes.values())
         if max_len == 1:
             result = []
-            for u in updates:
-                result.append(possible_indexes[u][0])
-            return result
+            result = [(u, possible_indexes[u][0]) for u in updates]
+            result.sort(key=lambda e:e[1])
+            return [r[0] for r in result]
 
 with open(sys.argv[1]) as f:
     lines = f.read().splitlines()
@@ -57,6 +67,7 @@ with open(sys.argv[1]) as f:
             print(u)
             print(relevant_orders)
             v = p_order(u, relevant_orders)
+            print("Aus", u, "wird", v)
             s += v[len(v)//2]
     print(s)
 
