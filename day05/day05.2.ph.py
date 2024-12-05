@@ -1,25 +1,23 @@
 import sys
 
 def p_order(updates, orders):
-    possible_indexes = {}
-    for u in updates:
-        possible_indexes[u] = list(range(len(updates)))
-
+    up = list(updates)
     while True:
+        changed = False
         for o in orders:
-
-            ix_low = min(possible_indexes[o[0]])
-            ix_high = max(possible_indexes[o[1]])
-
-            possible_indexes[o[1]] = [i for i in possible_indexes[o[1]] if i > ix_low]
-            possible_indexes[o[0]] = [i for i in possible_indexes[o[0]] if i < ix_high]
-
-        max_len = max(len(pi) for pi in possible_indexes.values())
-        if max_len == 1:
-            result = []
-            result = [(u, possible_indexes[u][0]) for u in updates]
-            result.sort(key=lambda e:e[1])
-            return [r[0] for r in result]
+            ix1 = up.index(o[0])
+            ix2 = up.index(o[1])
+            if ix1 > ix2:
+                new_up = []
+                new_up.extend(up[:ix2])
+                new_up.extend(up[ix2 + 1:ix1+1])
+                new_up.append(up[ix2])
+                new_up.extend(up[ix1+1:])
+                up = new_up
+                changed = True
+                break
+        if not changed:
+            return up
 
 with open(sys.argv[1]) as f:
     lines = f.read().splitlines()
