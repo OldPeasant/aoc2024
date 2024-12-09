@@ -35,7 +35,7 @@ with open(sys.argv[1]) as f:
         else:
             ix += 1
             space = True
-    print("".join(str(b) for b in blocks))
+    #print("".join(str(b) for b in blocks))
     ix_to = len(blocks) - 1
     ix_from = ix_to
     while True:
@@ -56,13 +56,14 @@ with open(sys.argv[1]) as f:
         ix_to = ix_from
         if ix_from < 0:
             break
-        print("".join(str(b) for b in blocks))
-    print("".join(str(b) for b in blocks))
+        #print("".join(str(b) for b in blocks))
+    #print("".join(str(b) for b in blocks))
     cs = 0
     i = 0
+    v = 0
+    prev = -1
     for b in blocks:
-        if b == '.':
-            break
-        cs += i * b
+        if b != '.':
+            cs += i * b
         i += 1
     print(cs)
