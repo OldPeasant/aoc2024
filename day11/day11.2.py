@@ -17,7 +17,6 @@ def transform(n):
     return new_stones
 
 def find_len(s, n):
-    print("find_len", s, n)
     if s not in lengths:
         lengths[s] = {}
     inner = lengths[s]
@@ -39,7 +38,6 @@ with open(sys.argv[1]) as f:
 
     stones = [int(s) for s in lines.split(' ')]
 
-    print(stones)
     tot = 0
     for s in stones:
         tot += find_len(s, 75)
