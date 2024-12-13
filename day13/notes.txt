@@ -1,0 +1,30 @@
+i * a1 + j * b1 = t1
+i * a2 + j * b2 = t2
+
+
+j = (t - i*a) / b
+
+
+i * ax + j * bx = px
+i * ay + j * by = py
+
+Prize: X=10000000008400, Y=10000000005400
+[        10000000008400,   10000000005400]
+
+cx = i * ax
+cy = i * ay
+
+cx = px - j * bx
+cy = py - j * by
+
+i * ax = px - j * bx
+i * ay = py - j * by
+
+i = (px - j * bx) / ax
+i = (py - j * by) / ay
+
+(px - j * bx) * ay = (py - j * by) * ax
+
+px * ay - j * bx * ay = py * ax - j * by * ax
+j * by * ax - j * bx * ay =  py * ax - px * ay
+j = (py * ax - px * ay) / (by * ax - bx * ay)
