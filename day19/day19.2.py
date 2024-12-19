@@ -27,11 +27,18 @@ def is_possible(available, pattern, counter):
             #print("  we pick", a)
             is_possible(available, pattern[len(a):], counter)
     #print("  nothing matched")
+    print("C", count_before, counter.count, has_possible, pattern)
+    print("P", pattern in possible, pattern in impossible)
     if counter.count > count_before:
+        assert has_possible
         possible[pattern] = counter.count - count_before
-    if not has_possible:
+    elif not has_possible:
         impossible.add(pattern)
-
+    else:
+        print("-------------------")
+        print(pattern, "possible", has_possible)
+        print("delta", counter.count - count_before)
+        possible[pattern] = 0
 with open(sys.argv[1]) as f:
     lines = f.read().splitlines()
     available = lines[0].split(', ')
