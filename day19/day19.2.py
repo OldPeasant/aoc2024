@@ -1,6 +1,7 @@
 import sys
 
 impossible = set()
+possible = {}
 
 class Counter:
     def __init__(self):
@@ -9,10 +10,15 @@ class Counter:
 def is_possible(available, pattern, counter):
     if len(pattern) == 0:
         counter.count += 1
+        print(counter.count)
         return
     if pattern in impossible:
         return
+    if pattern in possible:
+        counter.count += possible[pattern]
+        return
     #print("  check is possible", pattern)
+    count_before = counter.count
     has_possible = False
     for a in available:
         assert len(a) > 0
@@ -21,6 +27,8 @@ def is_possible(available, pattern, counter):
             #print("  we pick", a)
             is_possible(available, pattern[len(a):], counter)
     #print("  nothing matched")
+    if counter.count > count_before:
+        possible[pattern] = counter.count - count_before
     if not has_possible:
         impossible.add(pattern)
 
